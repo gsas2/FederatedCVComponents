@@ -1,7 +1,11 @@
 const path = require('path');
-
+const { ModuleFederationPlugin } = require("webpack").container;
 // TODO: I think this will be removed once we have Storybook
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+
+// const packageJson = require('./package.json');
+
+// const { name } = packageJson;
 
 module.exports = {
   mode: 'development',
@@ -33,7 +37,27 @@ module.exports = {
     ],
   },
   plugins: [
-    new HtmlWebpackPlugin()
+    new ModuleFederationPlugin({
+      name: 'FederatedCVComponents',
+      filename: 'remoteEntry.js',
+      exposes: {
+        './Header': './src/components/Header',
+        './SectionTitle': './src/components/SectionTitle',
+        './Summary': './src/components/Summary',
+      },
+      shared: {
+        react: {
+          singleton: true
+        },
+        'react-dom': {
+          singleton: true
+        },
+        'styled-components': {
+          singleton: true
+        },
+      },
+    }),
+    new HtmlWebpackPlugin(),
   ],
   devServer: {
     http2: true,
