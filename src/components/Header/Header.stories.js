@@ -15,19 +15,31 @@ const Template = (args) => <Header {...args} />;
 
 export const Default = Template.bind({});
 
+const calculateAge = (isodate) => {
+  const ageDifMs = Date.now() - new Date(isodate);
+  const ageDate = new Date(ageDifMs); // miliseconds from epoch
+  return Math.abs(ageDate.getUTCFullYear() - 1970);
+}
+
 Default.args = {
-  fullName: 'Mr. Firstname Lastname',
-  fullTitle: 'CEO / CTO / Founder / Manager / The most amazing employee',
+  fullName: 'He-Man',
+  fullTitle: 'Master of the Universe',
+  photo: 'https://i.pinimg.com/236x/50/20/1d/50201d7079759f17eecf967491900c93--masters-los.jpg',
   personalInfo: [
+    {
+      key: 'birth',
+      label: 'Date of Birth',
+      value: 'September 30th, 1983'
+    },
     {
       key: 'age',
       label: 'Age',
-      value: '3 years'
+      value: calculateAge('1983-09-30T00:00:00Z')
     },
     {
-      key: 'nationality',
-      label: 'Nationality',
-      value: 'Argentinian'
+      key: 'location',
+      label: 'Location',
+      value: 'Eternia'
     },
   ],
   contactInfo: {

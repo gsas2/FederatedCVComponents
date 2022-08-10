@@ -17,6 +17,7 @@ import {
 const Header = ({
   fullName,
   fullTitle,
+  photo,
   personalInfo,
   contactInfo
 }) => {
@@ -25,23 +26,33 @@ const Header = ({
       <div>
         <FullName>{fullName}</FullName>
         <FullTitle>{fullTitle}</FullTitle>
-        <DetailsWrapper>
-          <SectionTitle iconName="address-card">Personal Information</SectionTitle>
-          {personalInfo.map(({ key, label, value }) => (
-            <div key={key}>
-              <InfoTitle>{label}:</InfoTitle>{value}
-            </div>
-          ))}
-        </DetailsWrapper>
+        {personalInfo?.length > 0 && (
+          <DetailsWrapper>
+            <SectionTitle iconName="address-card">Personal Information</SectionTitle>
+            {personalInfo.map(({ key, label, value }) => (
+              <div key={key}>
+                <InfoTitle>{label}:</InfoTitle>{value}
+              </div>
+            ))}
+          </DetailsWrapper>
+        )}
       </div>
 
       <div>
-        <ContactPhoto />
-        <ContactOptions>
-          <ContactOptionIcon icon={solid('envelope')} />{contactInfo.email}
-          <ContactOptionIcon icon={brands('linkedin')} />{contactInfo.linkedIn}
-          <ContactOptionIcon icon={solid('phone-square')} />{contactInfo.phone}
-        </ContactOptions>
+        <ContactPhoto image={photo} />
+        {contactInfo && (
+          <ContactOptions>
+            {contactInfo.email && (
+              <><ContactOptionIcon icon={solid('envelope')} />{contactInfo.email}</>
+            )}
+            {contactInfo.linkedIn && (
+              <><ContactOptionIcon icon={brands('linkedin')} />{contactInfo.linkedIn}</>
+            )}
+            {contactInfo.phone && (
+              <><ContactOptionIcon icon={solid('phone-square')} />{contactInfo.phone}</>
+            )}
+          </ContactOptions>
+        )}
       </div>
     </Headline>
   );

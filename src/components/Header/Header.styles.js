@@ -12,13 +12,14 @@ export const Headline = styled.div`
 export const FullName = styled.h1`
   font-size: 35px;
   line-height: 35px;
-  margin-top: 27px;
+  margin: 27px 0 0;
 `;
 
 export const FullTitle = styled.h2`
   font-size: 22px;
   color: #adabab;
   line-height: 25px;
+  margin: 0;
 `;
 
 export const DetailsWrapper = styled.div`
@@ -41,7 +42,7 @@ export const ContactPhoto = styled.div`
   width: 150px;
   height: 150px;
   border-radius: 50%;
-  background-image: ${({ image }) => `url(${image ?? genericImage})`};
+  background-image: ${({ image }) => `url(${!!image ? image : genericImage})`};
   background-position: center;
   background-size: auto 100%;
   background-repeat: no-repeat;
