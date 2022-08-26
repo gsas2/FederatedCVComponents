@@ -1,6 +1,13 @@
 import React from 'react';
+import { ComponentStory, ComponentMeta } from '@storybook/react';
 
 import Header from './Header';
+
+const calculateAge = (isodate: string) => {
+  const ageDifMs = Date.now() - Number(new Date(isodate));
+  const ageDate = new Date(ageDifMs); // miliseconds from epoch
+  return String(Math.abs(ageDate.getUTCFullYear() - 1970));
+}
 
 export default {
   title: 'components/Header',
@@ -9,17 +16,9 @@ export default {
     // More on Story layout: https://storybook.js.org/docs/react/configure/story-layout
     layout: 'padded',
   },
-};
+} as ComponentMeta<typeof Header>;
 
-const Template = (args) => <Header {...args} />;
-
-export const Default = Template.bind({});
-
-const calculateAge = (isodate) => {
-  const ageDifMs = Date.now() - new Date(isodate);
-  const ageDate = new Date(ageDifMs); // miliseconds from epoch
-  return Math.abs(ageDate.getUTCFullYear() - 1970);
-}
+export const Default: ComponentStory<typeof Header> = (args) => <Header {...args} />;
 
 Default.args = {
   fullName: 'He-Man',
