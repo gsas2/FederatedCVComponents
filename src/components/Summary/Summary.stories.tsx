@@ -1,4 +1,5 @@
 import React from 'react';
+import { ComponentStory, ComponentMeta } from '@storybook/react';
 
 import Summary from './Summary';
 
@@ -9,11 +10,9 @@ export default {
     // More on Story layout: https://storybook.js.org/docs/react/configure/story-layout
     layout: 'padded',
   },
-};
+} as ComponentMeta<typeof Summary>;
 
-const Template = (args) => <Summary {...args} />;
-
-export const Default = Template.bind({});
+export const Default: ComponentStory<typeof Summary> = (args) => <Summary {...args} />;
 
 Default.args = {
   intro: {

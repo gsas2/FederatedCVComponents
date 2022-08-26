@@ -1,5 +1,6 @@
 import React from 'react';
-import { solid, brands } from '@fortawesome/fontawesome-svg-core/import.macro';
+import { faEnvelope, faPhoneSquare } from '@fortawesome/free-solid-svg-icons';
+import { faLinkedin } from '@fortawesome/free-brands-svg-icons'
 
 import SectionTitle from '../SectionTitle';
 
@@ -20,16 +21,30 @@ const Header = ({
   photo,
   personalInfo,
   contactInfo
-}) => {
+}: {
+  fullName: string,
+  fullTitle: string,
+  photo?: string,
+  personalInfo?: {
+    key: string,
+    label: string,
+    value: string
+  }[],
+  contactInfo?: {
+    email?: string,
+    linkedIn?: string,
+    phone?: string
+  }
+} ) => {
   return (
     <Headline>
       <div>
         <FullName>{fullName}</FullName>
         <FullTitle>{fullTitle}</FullTitle>
-        {personalInfo?.length > 0 && (
+        {(personalInfo?.length ?? 0) > 0 && (
           <DetailsWrapper>
             <SectionTitle iconName="address-card">Personal Information</SectionTitle>
-            {personalInfo.map(({ key, label, value }) => (
+            {personalInfo?.map(({ key, label, value }) => (
               <div key={key}>
                 <InfoTitle>{label}:</InfoTitle>{value}
               </div>
@@ -43,13 +58,13 @@ const Header = ({
         {contactInfo && (
           <ContactOptions>
             {contactInfo.email && (
-              <><ContactOptionIcon icon={solid('envelope')} />{contactInfo.email}</>
+              <><ContactOptionIcon icon={faEnvelope} />{contactInfo.email}</>
             )}
             {contactInfo.linkedIn && (
-              <><ContactOptionIcon icon={brands('linkedin')} />{contactInfo.linkedIn}</>
+              <><ContactOptionIcon icon={faLinkedin} />{contactInfo.linkedIn}</>
             )}
             {contactInfo.phone && (
-              <><ContactOptionIcon icon={solid('phone-square')} />{contactInfo.phone}</>
+              <><ContactOptionIcon icon={faPhoneSquare} />{contactInfo.phone}</>
             )}
           </ContactOptions>
         )}

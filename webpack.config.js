@@ -9,7 +9,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   mode: 'development',
-  entry: './src/index.js',
+  entry: './src/index.ts',
+  devtool: 'inline-source-map',
   output: {
     filename: 'main.js',
     path: path.resolve(__dirname, 'dist'),
@@ -33,8 +34,22 @@ module.exports = {
             presets: ['@babel/preset-env', '@babel/preset-react'],
           },
         },
-      }
+      },
+      {
+        test: /\.tsx?$/,
+        use: 'ts-loader',
+        exclude: /node_modules/,
+      },
     ],
+  },
+  resolve: {
+    extensions: ['.tsx', '.ts', '.js'],
+    fallback: {
+      fs: false,
+      path: false,
+      os: false,
+      module: false
+    }
   },
   plugins: [
     new ModuleFederationPlugin({
@@ -60,7 +75,7 @@ module.exports = {
     new HtmlWebpackPlugin(),
   ],
   devServer: {
-    http2: true,
+    server: 'spdy',
     // open: true,
     // port: 3000,
     hot: true,

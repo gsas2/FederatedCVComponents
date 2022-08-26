@@ -37,7 +37,11 @@ export const InfoTitle = styled.span`
   }
 `;
 
-export const ContactPhoto = styled.div`
+interface ContactPhotoProps {
+  image?: string
+}
+
+export const ContactPhoto = styled.div<ContactPhotoProps>`
   margin: auto;
   width: 150px;
   height: 150px;
