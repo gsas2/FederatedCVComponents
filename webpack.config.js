@@ -7,6 +7,15 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 // const { name } = packageJson;
 
+// The following configuration options are common to ModuleFederationPlugin and dts-loader
+const ModuleFederationCommonConfig = {
+  name: 'FederatedCVComponents',
+  exposes: {
+    './Header': './src/components/Header',
+    './Summary': './src/components/Summary',
+  },
+}
+
 module.exports = {
   mode: 'development',
   entry: './src/index.ts',
@@ -31,14 +40,28 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['@babel/preset-env', '@babel/preset-react'],
+            presets: [
+              '@babel/preset-env',
+              '@babel/preset-react'
+            ],
           },
         },
       },
       {
         test: /\.tsx?$/,
-        use: 'ts-loader',
         exclude: /node_modules/,
+        use: [
+          {
+            loader: 'ts-loader'
+          },
+          {
+            loader: 'dts-loader',
+            options: {
+              ...ModuleFederationCommonConfig,
+              typesOutputDir: './distTypes' // Optional, default is '.wp_federation'
+            },
+          },
+        ],
       },
     ],
   },
@@ -53,13 +76,8 @@ module.exports = {
   },
   plugins: [
     new ModuleFederationPlugin({
-      name: 'FederatedCVComponents',
+      ...ModuleFederationCommonConfig,
       filename: 'remoteEntry.js',
-      exposes: {
-        './Header': './src/components/Header',
-        './SectionTitle': './src/components/SectionTitle',
-        './Summary': './src/components/Summary',
-      },
       shared: {
         react: {
           singleton: true

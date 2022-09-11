@@ -36,12 +36,13 @@ jobs:
       - name: Step 3 - Move everything into a single folder
         run: |
           mv storybook-static ./dist/storybook
+          tar czvf ./dist/FederatedCVComponents-dts.tgz -C ./distTypes/ FederatedCVComponents
 
       - name: Step 4 - Use the Upload Artifact GitHub Action
         uses: actions/upload-pages-artifact@main
-        with: 
+        with:
           path: dist
-          
+
   deploy:
     # Add a dependency to the build job
     needs: build
